@@ -6,7 +6,7 @@ const MsgStyle = {
     lineHeight: '1.4',
     opacity:'1',
     color: '#FFFFFF',
-    textShadow: '1px 1px #000000, 1px -1px #000000, -1px -1px #000000, -1px 1px #000000',
+    textShadow: '1px 1px 1px #000000, 1px -1px 1px #000000, -1px -1px 1px #000000, -1px 1px 1px #000000',
     fontFamily: 'SimHei',
     border: ''
 };
