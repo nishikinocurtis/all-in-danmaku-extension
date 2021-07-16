@@ -594,7 +594,7 @@ class DanmakuSwitcher extends React.Component {
                         name="danmaku-switch"
                         color="primary"
                     />
-                } label={<Typography>"Switch Danmaku"</Typography>} />
+                } label={<Typography>Switch Danmaku</Typography>} />
             </FormGroup>
 
         )
