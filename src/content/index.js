@@ -1,5 +1,5 @@
 /* Global Chrome */
-import React, {useState} from 'react'
+import React, {useState, useMemo} from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import BulletScreen from "rc-bullets";
@@ -9,11 +9,14 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
+import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent"
+import {createTheme, ThemeProvider} from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
@@ -583,33 +586,50 @@ class DanmakuSwitcher extends React.Component {
 
     render() {
         return (
-            <FormControlLabel control={
-                <Switch
-                    checked={this.state.checked}
-                    onChange={this.handleChange}
-                    name="danmaku-switch"
-                    color="primary"
-                />
-            } label="Switch Danmaku" />
+            <FormGroup row>
+                <FormControlLabel control={
+                    <Switch
+                        checked={this.state.checked}
+                        onChange={this.handleChange}
+                        name="danmaku-switch"
+                        color="primary"
+                    />
+                } label={<Typography>"Switch Danmaku"</Typography>} />
+            </FormGroup>
+
         )
     }
 }
 
 function DanmakuToolBar(props) {
+    const preferDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+    const theme = useMemo(
+        () => {
+            return createTheme({
+                palette: {
+                    type: preferDarkMode ? 'dark' : 'light'
+                }
+            })
+        },
+        [preferDarkMode]
+    )
     return (
-        <div className="danmaku-toolbar">
-            <div className="toolbar-left">
-                <DanmakuSwitcher />
+        <ThemeProvider theme={theme}>
+            <div className="danmaku-toolbar">
+                <div className="toolbar-left">
+                    <DanmakuSwitcher />
+                </div>
+                <div className="toolbar-middle">
+                    <DanmakuSendBar />
+                </div>
+                <div className="toolbar-right">
+                    <DanmakuSearchDialog />
+                    <DanmakuSideBar />
+                    <DanmakuConfigMenu />
+                </div>
             </div>
-            <div className="toolbar-middle">
-                <DanmakuSendBar />
-            </div>
-            <div className="toolbar-right">
-                <DanmakuSearchDialog />
-                <DanmakuSideBar />
-                <DanmakuConfigMenu />
-            </div>
-        </div>
+        </ThemeProvider>
     )
 }
 
